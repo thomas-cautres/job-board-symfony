@@ -23,9 +23,9 @@ readonly class BlameableListener
     {
         $entity = $args->getObject();
 
-        if (method_exists($entity, 'setCreatedBy')) {
+        if (method_exists($entity, 'setCreatedBy') && method_exists($entity, 'getCreatedBy')) {
             $user = $this->security->getUser();
-            if ($user instanceof User && null === $entity->getCreatedBy()) {
+            if ($user instanceof User) {
                 $entity->setCreatedBy($user);
             }
         }

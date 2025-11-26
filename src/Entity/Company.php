@@ -23,13 +23,13 @@ class Company
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $uuid;
 
     #[ORM\Column]
-    private string $name;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, Job>

@@ -29,9 +29,9 @@ readonly class JobService
 
         return new JobResponseDto(
             id: $job->getUuid()->toRfc4122(),
-            title: $job->getTitle(),
-            description: $job->getDescription(),
-            createdAt: $job->getCreatedAt()->format(\DateTimeInterface::RFC3339_EXTENDED)
+            title: (string) $job->getTitle(),
+            description: (string) $job->getDescription(),
+            createdAt: (string) $job->getCreatedAt()?->format(\DateTimeInterface::RFC3339_EXTENDED)
         );
     }
 }

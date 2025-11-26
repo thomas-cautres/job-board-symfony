@@ -13,6 +13,6 @@ class Admin extends User
 {
     public function getRoles(): array
     {
-        return ['ROLE_ADMIN'];
+        return [self::ROLE_ADMIN];
     }
 }

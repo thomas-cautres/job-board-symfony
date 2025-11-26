@@ -57,6 +57,6 @@ class Candidate extends User
 
     public function getRoles(): array
     {
-        return ['ROLE_CANDIDATE'];
+        return [self::ROLE_CANDIDATE];
     }
 }

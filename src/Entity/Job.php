@@ -24,16 +24,16 @@ class Job
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $uuid;
 
     #[ORM\Column]
-    private string $title;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private string $description;
+    private ?string $description = null;
 
     /**
      * @var Collection<int, JobApplication>
@@ -43,7 +43,7 @@ class Job
 
     #[ORM\ManyToOne(inversedBy: 'jobs')]
     #[ORM\JoinColumn(nullable: false)]
-    private Company $company;
+    private ?Company $company = null;
 
     public function __construct()
     {
@@ -81,19 +81,19 @@ class Job
         return $this;
     }
 
-    public function getCompany(): Company
+    public function getCompany(): ?Company
     {
         return $this->company;
     }
 
-    public function setCompany(Company $company): static
+    public function setCompany(?Company $company): static
     {
         $this->company = $company;
 
         return $this;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -110,7 +110,7 @@ class Job
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -122,7 +122,7 @@ class Job
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

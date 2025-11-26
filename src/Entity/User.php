@@ -24,22 +24,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
 
+    public const string ROLE_ADMIN = 'ROLE_ADMIN';
+    public const string ROLE_RECRUITER = 'ROLE_RECRUITER';
+    public const string ROLE_CANDIDATE = 'ROLE_CANDIDATE';
+    public const string ROLE_USER = 'ROLE_USER';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $uuid;
 
     #[ORM\Column]
-    private string $firstName;
+    private ?string $firstName = null;
 
     #[ORM\Column]
-    private string $lastName;
+    private ?string $lastName = null;
 
     #[ORM\Column(length: 180)]
-    private string $email;
+    private ?string $email = null;
 
     /**
      * @var array<string> The user roles
@@ -48,32 +53,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column]
-    private string $password;
+    private ?string $password = null;
 
     #[ORM\Column(options: ['default' => false])]
     private bool $confirmed = false;
 
     #[ORM\Column(options: ['default' => ''])]
-    private string $confirmationCode;
+    private ?string $confirmationCode = null;
 
     public function __construct()
     {
         $this->uuid = Uuid::v7();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): User
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -104,7 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -122,7 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -154,7 +152,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getConfirmationCode(): string
+    public function getConfirmationCode(): ?string
     {
         return $this->confirmationCode;
     }
@@ -166,9 +164,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
-        return $this->firstName;
+        return (string) $this->firstName;
     }
 
     public function setFirstName(string $firstName): static
@@ -178,7 +176,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -204,6 +202,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getInitials(): string
     {
-        return mb_strtoupper(mb_substr($this->firstName, 0, 1).mb_substr($this->lastName, 0, 1));
+        return mb_strtoupper(mb_substr((string) $this->firstName, 0, 1).mb_substr((string) $this->lastName, 0, 1));
     }
 }

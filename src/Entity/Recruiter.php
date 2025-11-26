@@ -29,6 +29,6 @@ class Recruiter extends User
 
     public function getRoles(): array
     {
-        return ['ROLE_RECRUITER'];
+        return [self::ROLE_RECRUITER];
     }
 }

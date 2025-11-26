@@ -22,7 +22,7 @@ class JobApplication
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $uuid;
@@ -31,7 +31,7 @@ class JobApplication
     private ?string $motivationLetter = null;
 
     #[ORM\Column]
-    private string $cvFilename;
+    private ?string $cvFilename = null;
 
     #[ORM\ManyToOne(inversedBy: 'applications')]
     #[ORM\JoinColumn(nullable: false)]
@@ -49,7 +49,7 @@ class JobApplication
         $this->uuid = Uuid::v7();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -78,12 +78,12 @@ class JobApplication
         return $this;
     }
 
-    public function getCvFilename(): string
+    public function getCvFilename(): ?string
     {
         return $this->cvFilename;
     }
 
-    public function setCvFilename(string $cvFilename): static
+    public function setCvFilename(?string $cvFilename): static
     {
         $this->cvFilename = $cvFilename;
 

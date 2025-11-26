@@ -6,7 +6,9 @@ namespace App\Controller\Job;
 
 use App\Dto\Job\CreateJobDto;
 use App\Dto\Job\JobResponseDto;
+use App\Entity\Company;
 use App\Entity\Recruiter;
+use App\Security\Voter\JobVoter;
 use App\Service\JobService;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use Nelmio\ApiDocBundle\Attribute\Security;
@@ -34,7 +36,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 )]
 #[OA\Tag(name: 'jobs')]
 #[Security(name: 'Bearer')]
-#[IsGranted('ROLE_RECRUITER')]
+#[IsGranted(JobVoter::CREATE)]
 class CreateJobController extends AbstractController
 {
     public function __construct(
@@ -48,7 +50,10 @@ class CreateJobController extends AbstractController
         /** @var Recruiter $user */
         $user = $this->getUser();
 
-        $response = $this->jobService->create($createJob, $user->getCompany());
+        /** @var Company $company */
+        $company = $user->getCompany();
+
+        $response = $this->jobService->create($createJob, $company);
 
         return $this->json($response, Response::HTTP_CREATED);
     }
