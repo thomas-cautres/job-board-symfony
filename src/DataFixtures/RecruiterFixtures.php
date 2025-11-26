@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Entity\Admin;
 use App\Entity\Company;
 use App\Entity\Recruiter;
 use App\Entity\User;

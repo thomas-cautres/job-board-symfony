@@ -11,4 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Admin extends User
 {
+    public function getRoles(): array
+    {
+        return ['ROLE_ADMIN'];
+    }
 }

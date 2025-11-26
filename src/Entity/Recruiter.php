@@ -26,4 +26,9 @@ class Recruiter extends User
 
         return $this;
     }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_RECRUITER'];
+    }
 }

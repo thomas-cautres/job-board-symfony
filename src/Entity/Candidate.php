@@ -54,4 +54,9 @@ class Candidate extends User
 
         return $this;
     }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_CANDIDATE'];
+    }
 }
