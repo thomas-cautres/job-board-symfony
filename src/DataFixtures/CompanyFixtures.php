@@ -25,7 +25,7 @@ class CompanyFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AdminFixtures::class
+            AdminFixtures::class,
         ];
     }
 }

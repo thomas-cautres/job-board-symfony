@@ -8,10 +8,11 @@ use App\Repository\RecruiterRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RecruiterRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Recruiter extends User
 {
     #[ORM\ManyToOne(inversedBy: 'recruiters')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Company $company = null;
 
     public function getCompany(): ?Company

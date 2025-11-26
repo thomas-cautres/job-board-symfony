@@ -8,6 +8,7 @@ use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Admin extends User
 {
 }
