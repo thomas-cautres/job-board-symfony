@@ -90,9 +90,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        assert('' !== $this->email);
+        $email = (string) $this->email;
 
-        return $this->email;
+        assert('' !== $email);
+
+        return $email;
     }
 
     /**
