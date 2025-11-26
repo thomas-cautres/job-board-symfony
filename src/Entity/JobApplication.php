@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class JobApplication
 {
     use BlameableTrait;
