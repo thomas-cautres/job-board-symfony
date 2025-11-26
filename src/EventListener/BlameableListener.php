@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\EventListener;
+
+use App\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Events;
+use Symfony\Bundle\SecurityBundle\Security;
+
+#[AsDoctrineListener(event: Events::prePersist)]
+#[AsDoctrineListener(event: Events::preUpdate)]
+readonly class BlameableListener
+{
+    public function __construct(private Security $security)
+    {
+    }
+
+    public function prePersist(PrePersistEventArgs $args): void
+    {
+        $entity = $args->getObject();
+
+        if (method_exists($entity, 'setCreatedBy')) {
+            $user = $this->security->getUser();
+            if ($user instanceof User && null === $entity->getCreatedBy()) {
+                $entity->setCreatedBy($user);
+            }
+        }
+    }
+
+    public function preUpdate(PreUpdateEventArgs $args): void
+    {
+        $entity = $args->getObject();
+
+        if (method_exists($entity, 'setUpdatedBy')) {
+            $user = $this->security->getUser();
+            if ($user instanceof User) {
+                $entity->setUpdatedBy($user);
+            }
+        }
+    }
+}
