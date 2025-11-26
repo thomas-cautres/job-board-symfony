@@ -29,10 +29,10 @@ class Job
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $uuid;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, length: 400)]
     private ?string $description = null;
 
     /**
