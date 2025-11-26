@@ -13,4 +13,5 @@ return (new PhpCsFixer\Config())
         'is_null' => true,
     ])
     ->setFinder($finder)
+    ->setRiskyAllowed(true)
 ;
