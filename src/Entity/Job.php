@@ -6,13 +6,15 @@ namespace App\Entity;
 
 use App\Entity\Traits\BlameableTrait;
 use App\Entity\Traits\TimestampableTrait;
+use App\Repository\JobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: JobRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Job
 {
@@ -30,7 +32,7 @@ class Job
     #[ORM\Column]
     private string $title;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::TEXT)]
     private string $description;
 
     /**
@@ -46,6 +48,7 @@ class Job
     public function __construct()
     {
         $this->applications = new ArrayCollection();
+        $this->uuid = Uuid::v7();
     }
 
     /**
@@ -86,6 +89,47 @@ class Job
     public function setCompany(Company $company): static
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

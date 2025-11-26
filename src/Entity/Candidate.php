@@ -20,6 +20,7 @@ class Candidate extends User
 
     public function __construct()
     {
+        parent::__construct();
         $this->applications = new ArrayCollection();
     }
 

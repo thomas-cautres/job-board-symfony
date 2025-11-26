@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
+#[ORM\Table(name: '`user`')]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
 #[ORM\DiscriminatorMap(['admin' => Admin::class, 'candidate' => Candidate::class, 'recruiter' => Recruiter::class])]
@@ -53,6 +54,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(options: ['default' => ''])]
     private string $confirmationCode;
+
+    public function __construct()
+    {
+        $this->uuid = Uuid::v7();
+    }
 
     public function getId(): int
     {

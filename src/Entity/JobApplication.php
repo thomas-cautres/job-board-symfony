@@ -44,6 +44,11 @@ class JobApplication
     #[ORM\Column(type: Types::STRING, enumType: JobApplicationStatus::class, options: ['default' => JobApplicationStatus::Submitted->value])]
     private JobApplicationStatus $status = JobApplicationStatus::Submitted;
 
+    public function __construct()
+    {
+        $this->uuid = Uuid::v7();
+    }
+
     public function getId(): int
     {
         return $this->id;

@@ -6,13 +6,14 @@ namespace App\Entity;
 
 use App\Entity\Traits\BlameableTrait;
 use App\Entity\Traits\TimestampableTrait;
+use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: CompanyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Company
 {
@@ -46,6 +47,7 @@ class Company
     {
         $this->jobs = new ArrayCollection();
         $this->recruiters = new ArrayCollection();
+        $this->uuid = Uuid::v7();
     }
 
     public function getId(): ?int
