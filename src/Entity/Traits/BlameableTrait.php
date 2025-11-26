@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait BlameableTrait
 {
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $createdBy = null;
 
     #[ORM\ManyToOne]
