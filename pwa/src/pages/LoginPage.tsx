@@ -2,9 +2,21 @@ import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/auth';
-import type { LoginCredentials, LoginResponse } from '../types/auth';
 import { LoginForm } from '@/components/LoginForm';
 
+export interface LoginCredentials {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  token: string;
+}
+
+export interface ApiError {
+  message: string;
+  code?: number;
+}
 
 const LoginPage = () => {
   const navigate = useNavigate();
