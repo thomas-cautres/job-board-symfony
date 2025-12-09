@@ -3,7 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/auth';
 import type { LoginCredentials, LoginResponse } from '../types/auth';
-import { LoginForm } from '@/components/login-form'
+import { LoginForm } from '@/components/LoginForm';
+
 
 const LoginPage = () => {
   const navigate = useNavigate();
