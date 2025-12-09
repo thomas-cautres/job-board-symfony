@@ -1,94 +1,76 @@
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { LayoutDashboard, Briefcase, Users, LogOut, PlusCircle } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
+import { LayoutDashboard, Briefcase, Users, PlusCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
-
-export function Sidebar({ className }: SidebarProps) {
-    const navigate = useNavigate();
-
+export function Sidebar({ className }: { className?: string }) {
     return (
-        <div className={cn("pb-12 min-h-screen", className)}>
-            <div className="space-y-4 py-4">
-                <div className="px-3 py-2">
-                    <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-                        Recruiter Dashboard
-                    </h2>
-                    <div className="space-y-1">
-                        <Button
-                            asChild
-                            variant="ghost"
-                            className="w-full justify-start"
-                        >
-                            <NavLink
-                                to="/dashboard"
-                                end
-                                className={({ isActive }) => cn(isActive && "bg-secondary text-secondary-foreground")}
-                            >
-                                <LayoutDashboard className="mr-2 h-4 w-4" />
-                                Overview
-                            </NavLink>
-                        </Button>
-                        <Button
-                            asChild
-                            variant="ghost"
-                            className="w-full justify-start"
-                        >
-                            <NavLink
-                                to="/jobs"
-                                className={({ isActive }) => cn(isActive && "bg-secondary text-secondary-foreground")}
-                            >
-                                <Briefcase className="mr-2 h-4 w-4" />
-                                Jobs
-                            </NavLink>
-                        </Button>
-                        <Button
-                            asChild
-                            variant="ghost"
-                            className="w-full justify-start"
-                        >
-                            <NavLink
-                                to="/applications"
-                                className={({ isActive }) => cn(isActive && "bg-secondary text-secondary-foreground")}
-                            >
-                                <Users className="mr-2 h-4 w-4" />
-                                Applications
-                            </NavLink>
-                        </Button>
-                        <Button
-                            asChild
-                            variant="ghost"
-                            className="w-full justify-start"
-                        >
-                            <NavLink
-                                to="/jobs/create"
-                                className={({ isActive }) => cn(isActive && "bg-secondary text-secondary-foreground")}
-                            >
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                Post a Job
-                            </NavLink>
-                        </Button>
-                    </div>
+        <aside className={cn("w-64 border-r bg-card/50 backdrop-blur-xl h-screen sticky top-0 flex flex-col pt-6 pb-4", className)}>
+            <div className="px-6 mb-8 flex items-center gap-2">
+                <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/25">
+                    <Briefcase className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <Separator className="my-4" />
-                <div className="px-3 py-2">
-                    <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-                        Account
-                    </h2>
-                    <div className="space-y-1">
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50"
-                            onClick={() => navigate('/logout')}
-                        >
-                            <LogOut className="mr-2 h-4 w-4" />
-                            Logout
+                <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">JobBoard</span>
+            </div>
+
+            <nav className="flex-1 px-4 space-y-2">
+                <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) =>
+                        cn(
+                            "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-200 group",
+                            isActive
+                                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )
+                    }
+                >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                </NavLink>
+
+                <NavLink
+                    to="/jobs"
+                    className={({ isActive }) =>
+                        cn(
+                            "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-200 group",
+                            isActive
+                                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )
+                    }
+                >
+                    <Briefcase className="h-4 w-4" />
+                    Jobs
+                </NavLink>
+
+                <NavLink
+                    to="/applications"
+                    className={({ isActive }) =>
+                        cn(
+                            "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-200 group",
+                            isActive
+                                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )
+                    }
+                >
+                    <Users className="h-4 w-4" />
+                    Applications
+                </NavLink>
+            </nav>
+
+            <div className="px-4 mt-auto">
+                <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 border border-primary/10">
+                    <h4 className="font-semibold text-sm mb-1 text-foreground">Need updates?</h4>
+                    <p className="text-xs text-muted-foreground mb-3">Check the roadmap for new features.</p>
+                    <NavLink to="/jobs/create">
+                        <Button className="w-full shadow-lg shadow-primary/25 cursor-pointer" size="sm">
+                            <PlusCircle className="mr-2 h-4 w-4" /> Post a Job
                         </Button>
-                    </div>
+                    </NavLink>
                 </div>
             </div>
-        </div>
+        </aside>
     );
 }
