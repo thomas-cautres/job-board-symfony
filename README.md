@@ -2,11 +2,11 @@
 
 > **⚠️ Work in Progress**: This project is currently under active development. Features and APIs are subject to change.
 
-A job board application built with **Symfony 7.3** (PHP 8.4) as the backend and **React** as the frontend.
+A job board application built with **Symfony 7.4** (PHP 8.4) as the backend and **React** as the frontend.
 
 ## 🚀 Tech Stack
 
-- **Backend**: Symfony 7.3
+- **Backend**: Symfony 7.4
 - **Language**: PHP 8.4
 - **Frontend**: React
 - **Database**: PostgreSQL

@@ -93,3 +93,7 @@ phpstan: ## Phpstan
 
 phpcsfixer: ## phpcsfixer
 	@$(DOCKER_COMP) exec -e APP_ENV=test -e PHP_CS_FIXER_IGNORE_ENV=true php vendor/bin/php-cs-fixer fix
+
+## —— API ——————————————————————————————————————————————————————————————
+lexik-generate-keys:
+	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/console lexik:jwt:generate-keypair

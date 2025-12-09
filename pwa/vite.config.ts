@@ -5,19 +5,17 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true,  // Indispensable pour Docker (expose l'IP)
-    port: 5173,  // Le port défini dans votre docker-compose
+    host: true,
+    port: 5173,
     strictPort: true,
     watch: {
-      usePolling: true, // Souvent nécessaire pour que le Hot Reload marche sur Windows/Docker
+      usePolling: true,
     },
-    // Configuration du Proxy pour taper sur Symfony sans problème de CORS
     proxy: {
       '/api': {
-        target: 'https://php', // Le nom du service Docker Symfony
+        target: 'http://php',
         changeOrigin: true,
-        secure: false, // Car on utilise un certificat auto-signé en dev
-        rewrite: (path) => path.replace(/^\/api/, ''), // Optionnel : dépend de vos routes Symfony
+        secure: false,
       },
     },
   },
