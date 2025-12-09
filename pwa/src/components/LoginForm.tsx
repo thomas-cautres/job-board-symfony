@@ -14,7 +14,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import type { LoginCredentials } from "@/types/auth"
+import type { LoginCredentials } from "../types/auth"
 import type { ChangeEvent, FormEvent } from "react"
 
 interface LoginFormProps extends Omit<React.ComponentProps<"div">, "onChange" | "onSubmit"> {
