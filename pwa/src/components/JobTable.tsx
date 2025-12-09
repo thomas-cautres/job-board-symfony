@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
     Table,
     TableBody,
@@ -17,46 +16,38 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, Pencil, Trash } from "lucide-react";
-import { fetchJobs, deleteJob } from "@/api/jobs";
-import type { Job } from "@/types/jobs";
+import { MoreHorizontal, Pencil, Trash, AlertCircle } from "lucide-react";
+import { useJobsQuery, useDeleteJobMutation } from "@/hooks/useJobs";
 
 export function JobTable() {
-    const [jobs, setJobs] = useState<Job[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: jobs = [], isLoading, isError, error } = useJobsQuery();
+    const deleteJobMutation = useDeleteJobMutation();
 
-    const loadJobs = async () => {
-        setLoading(true);
-        try {
-            const data = await fetchJobs();
-            setJobs(data);
-        } catch (error) {
-            console.error("Failed to load jobs", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        loadJobs();
-    }, []);
-
-    const handleDelete = async (id: string) => {
+    const handleDelete = (id: string) => {
         if (confirm("Are you sure you want to delete this job?")) {
-            await deleteJob(id);
-            loadJobs();
+            deleteJobMutation.mutate(id);
         }
     };
 
-    if (loading) {
-        return <div className="text-center p-4">Loading jobs...</div>;
+    if (isLoading) {
+        return <div className="text-center py-8 text-muted-foreground">Loading jobs...</div>;
+    }
+
+    if (isError) {
+        return (
+            <div className="text-center py-8 text-destructive bg-destructive/10 rounded-lg">
+                <AlertCircle className="mx-auto h-8 w-8 mb-2" />
+                <p>Failed to load jobs.</p>
+                <p className="text-sm opacity-80">{error?.message}</p>
+            </div>
+        );
     }
 
     return (
-        <div className="rounded-md border bg-white">
+        <div className="rounded-md border">
             <Table>
                 <TableHeader>
-                    <TableRow className="hover:bg-transparent">
+                    <TableRow>
                         <TableHead className="w-[300px]">Title</TableHead>
                         <TableHead>Location</TableHead>
                         <TableHead>Type</TableHead>
@@ -68,11 +59,8 @@ export function JobTable() {
                 <TableBody>
                     {jobs.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center py-16 text-muted-foreground">
-                                <div className="flex flex-col items-center justify-center gap-2">
-                                    <p className="text-lg font-medium text-foreground">No jobs found</p>
-                                    <p className="text-sm">Get started by creating a new job posting.</p>
-                                </div>
+                            <TableCell colSpan={6} className="h-24 text-center">
+                                No jobs found.
                             </TableCell>
                         </TableRow>
                     ) : (

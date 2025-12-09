@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useApplicationsQuery, useUpdateApplicationStatus } from '@/hooks/useApplications';
 import {
     Card,
     CardContent,
@@ -10,41 +10,15 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { fetchApplications, updateApplicationStatus } from '@/api/jobs';
 import type { JobApplication } from '@/types/jobs';
-import { Check, X } from "lucide-react";
+import { Check, X, AlertCircle } from "lucide-react";
 
 export function ApplicationBoard() {
-    const [applications, setApplications] = useState<JobApplication[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: applications = [], isLoading, isError, error } = useApplicationsQuery();
+    const updateStatusMutation = useUpdateApplicationStatus();
 
-    const loadApplications = async () => {
-        setLoading(true);
-        try {
-            const data = await fetchApplications();
-            setApplications(data);
-        } catch (error) {
-            console.error("Failed to load applications", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        loadApplications();
-    }, []);
-
-    const handleStatusUpdate = async (id: string, status: JobApplication['status']) => {
-        try {
-            await updateApplicationStatus(id, status);
-            // Optimistic update
-            setApplications(prev => prev.map(app =>
-                app.id === id ? { ...app, status } : app
-            ));
-        } catch (error) {
-            console.error("Failed to update status", error);
-            loadApplications(); // Revert on error
-        }
+    const handleStatusUpdate = (id: string, status: JobApplication['status']) => {
+        updateStatusMutation.mutate({ id, status });
     };
 
     const getStatusColor = (status: JobApplication['status']) => {
@@ -56,8 +30,18 @@ export function ApplicationBoard() {
         }
     };
 
-    if (loading) {
+    if (isLoading) {
         return <div className="text-center p-4">Loading applications...</div>;
+    }
+
+    if (isError) {
+        return (
+            <div className="text-center p-8 text-destructive bg-destructive/10 rounded-lg">
+                <AlertCircle className="mx-auto h-8 w-8 mb-2" />
+                <p>Failed to load applications.</p>
+                <p className="text-sm opacity-80">{error?.message}</p>
+            </div>
+        );
     }
 
     return (
