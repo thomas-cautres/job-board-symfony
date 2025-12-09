@@ -1,3 +1,4 @@
+import { ApiClient } from "./client";
 import type { Job, JobApplication } from "../types/jobs";
 
 const MOCK_JOBS: Job[] = [
@@ -67,15 +68,15 @@ export const fetchJobs = async (): Promise<Job[]> => {
 };
 
 export const createJob = async (job: Omit<Job, 'id' | 'createdAt' | 'status'>): Promise<Job> => {
-    return new Promise((resolve) => {
-        const newJob: Job = {
-            ...job,
-            id: Math.random().toString(36).substring(2, 9),
-            status: 'OPEN',
-            createdAt: new Date().toISOString()
-        };
-        MOCK_JOBS.push(newJob);
-        setTimeout(() => resolve(newJob), 500);
+    // Backend currently only accepts title and description via CreateJobDto
+    const payload = {
+        title: job.title,
+        description: job.description
+    };
+
+    return ApiClient.request<Job>('/api/job', {
+        method: 'POST',
+        body: JSON.stringify(payload)
     });
 };
 
