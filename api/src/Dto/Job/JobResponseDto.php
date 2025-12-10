@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Dto\Job;
 
+use App\Entity\Job;
+
 final readonly class JobResponseDto
 {
     public function __construct(
@@ -16,5 +18,19 @@ final readonly class JobResponseDto
         public string $type,
         public string $status,
     ) {
+    }
+
+    public static function fromEntity(Job $job): self
+    {
+        return new self(
+            id: $job->getUuid()->toRfc4122(),
+            title: (string) $job->getTitle(),
+            description: (string) $job->getDescription(),
+            createdAt: (string) $job->getCreatedAt()?->format(\DateTimeInterface::RFC3339_EXTENDED),
+            salary: (string) $job->getSalary(),
+            location: (string) $job->getLocation(),
+            type: $job->getType()->value,
+            status: $job->getStatus()->value,
+        );
     }
 }
