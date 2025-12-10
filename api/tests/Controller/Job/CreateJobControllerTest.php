@@ -30,6 +30,9 @@ class CreateJobControllerTest extends WebTestCase
         $this->client->request('POST', '/api/job', [
             'title' => 'Senior Symfony Developer',
             'description' => 'We are looking for an expert Symfony developer.',
+            'salary' => '45k - 60k',
+            'location' => 'Paris',
+            'type' => 'full-time',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
@@ -38,6 +41,9 @@ class CreateJobControllerTest extends WebTestCase
         $this->assertArrayHasKey('id', $responseContent);
         $this->assertSame('Senior Symfony Developer', $responseContent['title']);
         $this->assertSame('We are looking for an expert Symfony developer.', $responseContent['description']);
+        $this->assertSame('45k - 60k', $responseContent['salary']);
+        $this->assertSame('Paris', $responseContent['location']);
+        $this->assertSame('full-time', $responseContent['type']);
     }
 
     public function testTitleIsTooLong(): void
@@ -47,6 +53,9 @@ class CreateJobControllerTest extends WebTestCase
         $this->client->request('POST', '/api/job', [
             'title' => 'Senior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony Developer',
             'description' => 'We are looking for an expert Symfony developer.',
+            'salary' => '45k - 60k',
+            'location' => 'Paris',
+            'type' => 'full-time',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -59,6 +68,9 @@ class CreateJobControllerTest extends WebTestCase
         $this->client->request('POST', '/api/job', [
             'title' => 'Senior Symfony Developer',
             'description' => 'Senior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony Developer Symfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony Developer',
+            'salary' => '45k - 60k',
+            'location' => 'Paris',
+            'type' => 'full-time',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -68,7 +80,10 @@ class CreateJobControllerTest extends WebTestCase
     {
         $this->client->request('POST', '/api/job', [
             'title' => 'Senior Symfony Developer',
-            'description' => 'Senior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony Developer Symfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony Developer',
+            'description' => 'We are looking for an expert Symfony developer.',
+            'salary' => '45k - 60k',
+            'location' => 'Paris',
+            'type' => 'full-time',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
@@ -87,7 +102,10 @@ class CreateJobControllerTest extends WebTestCase
 
         $this->client->request('POST', '/api/job', [
             'title' => 'Senior Symfony Developer',
-            'description' => 'Senior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony Developer Symfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony Developer',
+            'description' => 'We are looking for an expert Symfony developer.',
+            'salary' => '45k - 60k',
+            'location' => 'Paris',
+            'type' => 'full-time',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
