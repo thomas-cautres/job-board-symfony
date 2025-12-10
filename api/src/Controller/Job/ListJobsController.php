@@ -19,7 +19,10 @@ use Symfony\Component\Routing\Attribute\Route;
 #[OA\Response(
     response: Response::HTTP_OK,
     description: 'Successfully fetched',
-    content: new Model(type: JobResponseDto::class)
+    content: new OA\JsonContent(
+        type: 'array',
+        items: new OA\Items(ref: new Model(type: JobResponseDto::class))
+    )
 )]
 #[OA\Response(
     response: Response::HTTP_UNAUTHORIZED,
