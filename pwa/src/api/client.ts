@@ -32,6 +32,10 @@ export class ApiClient {
             headers.set("Content-Type", "application/json");
         }
 
+        if (!headers.has("accept")) {
+            headers.set("accept", "application/json");
+        }
+
         const config: RequestInit = {
             ...options,
             headers,

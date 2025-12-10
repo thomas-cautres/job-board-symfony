@@ -15,6 +15,12 @@ final readonly class CreateJobDto
         #[Assert\NotBlank(message: 'create.job.description.not_blank')]
         #[Assert\Length(max: 400, maxMessage: 'create.job.description.length.max')]
         public string $description,
+        #[Assert\NotBlank(message: 'create.job.salary.not_blank')]
+        public string $salary,
+        #[Assert\NotBlank(message: 'create.job.location.not_blank')]
+        public string $location,
+        #[Assert\NotBlank(message: 'create.job.type.not_blank')]
+        public string $type,
     ) {
     }
 }

@@ -8,6 +8,7 @@ use App\Dto\Job\CreateJobDto;
 use App\Dto\Job\JobResponseDto;
 use App\Entity\Company;
 use App\Entity\Job;
+use App\Enum\JobType;
 use App\Repository\JobRepository;
 
 readonly class JobService
@@ -23,7 +24,10 @@ readonly class JobService
         $job
             ->setTitle($input->title)
             ->setDescription($input->description)
-            ->setCompany($company);
+            ->setCompany($company)
+            ->setLocation($input->location)
+            ->setType(JobType::from($input->type))
+            ->setSalary($input->salary);
 
         $this->jobRepository->save($job);
 
@@ -31,7 +35,11 @@ readonly class JobService
             id: $job->getUuid()->toRfc4122(),
             title: (string) $job->getTitle(),
             description: (string) $job->getDescription(),
-            createdAt: (string) $job->getCreatedAt()?->format(\DateTimeInterface::RFC3339_EXTENDED)
+            createdAt: (string) $job->getCreatedAt()?->format(\DateTimeInterface::RFC3339_EXTENDED),
+            salary: (string) $job->getSalary(),
+            location: (string) $job->getLocation(),
+            type: $job->getType()->value,
+            status: $job->getStatus()->value,
         );
     }
 }

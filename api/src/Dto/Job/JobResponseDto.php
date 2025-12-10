@@ -11,6 +11,10 @@ final readonly class JobResponseDto
         public string $title,
         public string $description,
         public string $createdAt,
+        public string $salary,
+        public string $location,
+        public string $type,
+        public string $status,
     ) {
     }
 }

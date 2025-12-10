@@ -12,14 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCreateJobMutation } from "@/hooks/useJobs";
 import { useNavigate } from "react-router-dom";
 import { AlertCircle, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const jobSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters"),
     location: z.string().min(2, "Location is required"),
-    employmentType: z.string().min(2, "Employment type is required"),
+    employmentType: z.enum(["full-time", "part-time", "internship"]),
     salary: z.string().min(1, "Salary range is required"),
     description: z.string().min(3, "Description must be at least 10 characters"),
 });
@@ -33,13 +34,14 @@ export default function JobCreatePage() {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors, isSubmitting },
     } = useForm<JobFormValues>({
         resolver: zodResolver(jobSchema),
         defaultValues: {
             title: "",
             location: "",
-            employmentType: "",
+            employmentType: "full-time",
             salary: "",
             description: "",
         },
@@ -49,7 +51,6 @@ export default function JobCreatePage() {
         // API currently only supports title and description
         createJobMutation.mutate({
             ...data,
-            status: 'OPEN',
         } as any, {
             onSuccess: () => navigate('/jobs')
         });
@@ -98,11 +99,24 @@ export default function JobCreatePage() {
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="employmentType">Employment Type</Label>
-                                <Input
-                                    id="employmentType"
-                                    placeholder="e.g. Full-time"
-                                    {...register("employmentType")}
-                                    disabled={isSubmitting || createJobMutation.isPending}
+                                <Controller
+                                    name="employmentType"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSubmitting || createJobMutation.isPending}>
+                                            <SelectTrigger className="w-[180px]">
+                                                <SelectValue placeholder="Select a type" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>Employment Type</SelectLabel>
+                                                    <SelectItem value="full-time">Full time</SelectItem>
+                                                    <SelectItem value="part-time">Part time</SelectItem>
+                                                    <SelectItem value="internship">Internship</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    )}
                                 />
                                 {errors.employmentType && <p className="text-sm text-destructive">{errors.employmentType.message}</p>}
                             </div>

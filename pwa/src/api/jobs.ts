@@ -71,7 +71,10 @@ export const createJob = async (job: Omit<Job, 'id' | 'createdAt' | 'status'>): 
     // Backend currently only accepts title and description via CreateJobDto
     const payload = {
         title: job.title,
-        description: job.description
+        description: job.description,
+        salary: job.salary,
+        type: job.employmentType,
+        location: job.location,
     };
 
     return ApiClient.request<Job>('/api/job', {

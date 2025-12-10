@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Entity\Traits\BlameableTrait;
 use App\Entity\Traits\TimestampableTrait;
+use App\Enum\JobStatus;
+use App\Enum\JobType;
 use App\Repository\JobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,6 +36,18 @@ class Job
 
     #[ORM\Column(type: Types::TEXT, length: 400)]
     private ?string $description = null;
+
+    #[ORM\Column(type: Types::STRING, enumType: JobType::class)]
+    private ?JobType $type = null;
+
+    #[ORM\Column]
+    private ?string $salary = null;
+
+    #[ORM\Column]
+    private ?string $location = null;
+
+    #[ORM\Column(type: Types::STRING, enumType: JobStatus::class, options: ['default' => JobStatus::Open->value])]
+    private JobStatus $status = JobStatus::Open;
 
     /**
      * @var Collection<int, JobApplication>
@@ -133,4 +147,53 @@ class Job
 
         return $this;
     }
+
+    public function getType(): ?JobType
+    {
+        return $this->type;
+    }
+
+    public function setType(JobType $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getSalary(): ?string
+    {
+        return $this->salary;
+    }
+
+    public function setSalary(string $salary): static
+    {
+        $this->salary = $salary;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getStatus(): JobStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(JobStatus $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 }
