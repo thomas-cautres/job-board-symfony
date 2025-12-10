@@ -73,7 +73,7 @@ export function JobTable() {
                                 <TableCell className="text-muted-foreground">{job.location}</TableCell>
                                 <TableCell>
                                     <Badge variant="outline" className="font-normal bg-secondary/50">
-                                        {job.employmentType}
+                                        {job.type}
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="text-muted-foreground font-mono text-xs">{job.salary}</TableCell>

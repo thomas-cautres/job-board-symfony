@@ -7,7 +7,7 @@ const MOCK_JOBS: Job[] = [
         title: "Senior Frontend Developer",
         description: "We are looking for an experienced Frontend Developer to join our team. You will be responsible for building high-quality, responsive web applications.",
         location: "Remote",
-        employmentType: "Full-time",
+        type: "Full-time",
         salary: "€50,000 - €70,000",
         status: "OPEN",
         createdAt: "2023-11-15T09:00:00Z"
@@ -17,7 +17,7 @@ const MOCK_JOBS: Job[] = [
         title: "Backend Engineer (Symfony)",
         description: "Join our backend team to build robust APIs and microservices using Symfony and PHP.",
         location: "Paris, France",
-        employmentType: "Full-time",
+        type: "Full-time",
         salary: "€45,000 - €65,000",
         status: "OPEN",
         createdAt: "2023-11-20T14:30:00Z"
@@ -27,7 +27,7 @@ const MOCK_JOBS: Job[] = [
         title: "Product Designer",
         description: "We fit talented designers who can create beautiful and functional user interfaces.",
         location: "Lyon, France",
-        employmentType: "Contract",
+        type: "Contract",
         salary: "€400/day",
         status: "CLOSED",
         createdAt: "2023-10-05T11:00:00Z"
@@ -62,18 +62,17 @@ const MOCK_APPLICATIONS: JobApplication[] = [
 ];
 
 export const fetchJobs = async (): Promise<Job[]> => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve([...MOCK_JOBS]), 500);
+    return ApiClient.request<Job[]>('/api/jobs', {
+        method: 'GET'
     });
 };
 
 export const createJob = async (job: Omit<Job, 'id' | 'createdAt' | 'status'>): Promise<Job> => {
-    // Backend currently only accepts title and description via CreateJobDto
     const payload = {
         title: job.title,
         description: job.description,
         salary: job.salary,
-        type: job.employmentType,
+        type: job.type,
         location: job.location,
     };
 

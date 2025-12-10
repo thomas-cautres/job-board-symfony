@@ -20,9 +20,11 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 const jobSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters"),
     location: z.string().min(2, "Location is required"),
-    employmentType: z.enum(["full-time", "part-time", "internship"]),
+    type: z.enum(["full-time", "part-time", "internship"]),
     salary: z.string().min(1, "Salary range is required"),
-    description: z.string().min(3, "Description must be at least 10 characters"),
+    description: z.string()
+        .min(10, "Description must be at least 10 characters")
+        .max(400, "Description must be less than 400 characters"),
 });
 
 type JobFormValues = z.infer<typeof jobSchema>;
@@ -41,7 +43,7 @@ export default function JobCreatePage() {
         defaultValues: {
             title: "",
             location: "",
-            employmentType: "full-time",
+            type: "full-time",
             salary: "",
             description: "",
         },
@@ -98,9 +100,9 @@ export default function JobCreatePage() {
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label htmlFor="employmentType">Employment Type</Label>
+                                <Label htmlFor="type">Employment Type</Label>
                                 <Controller
-                                    name="employmentType"
+                                    name="type"
                                     control={control}
                                     render={({ field }) => (
                                         <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSubmitting || createJobMutation.isPending}>
@@ -118,7 +120,7 @@ export default function JobCreatePage() {
                                         </Select>
                                     )}
                                 />
-                                {errors.employmentType && <p className="text-sm text-destructive">{errors.employmentType.message}</p>}
+                                {errors.type && <p className="text-sm text-destructive">{errors.type.message}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="salary">Salary Range</Label>

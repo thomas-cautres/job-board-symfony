@@ -3,7 +3,7 @@ export interface Job {
     title: string;
     description: string;
     location: string;
-    employmentType: string;
+    type: string;
     salary: string;
     status: 'OPEN' | 'CLOSED';
     createdAt: string;
