@@ -3,7 +3,7 @@
 services:
   php:
     build:
-      context: ./api
+      context: .
       target: frankenphp_dev
     volumes:
       - ./api:/app
@@ -22,23 +22,6 @@ services:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
     tty: true
+
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
-
-  pwa:
-    image: node:20-alpine
-    working_dir: /app
-    volumes:
-      - ./pwa:/app
-    ports:
-      - "5173:5173"
-    command: sh -c "npm install && npm run dev -- --host"
-    tty: true
-
-  ###> doctrine/doctrine-bundle ###
-  database:
-    ports:
-      # HTTP
-      - target: 5432
-        published: 55432
-###< doctrine/doctrine-bundle ###
