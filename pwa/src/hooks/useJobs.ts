@@ -1,10 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchCandidateJobs, fetchRecruiterJobs, createJob, deleteJob } from "@/api/jobs";
+import { fetchCandidateJobs, fetchCandidateJob, fetchRecruiterJobs, createJob, deleteJob } from "@/api/jobs";
 
-export const useCandidateJobsQuery = () => {
+export const useCandidateJobsQuery = (page: number = 1) => {
     return useQuery({
-        queryKey: ['candidate-jobs'],
-        queryFn: fetchCandidateJobs,
+        queryKey: ['candidate-jobs', page],
+        queryFn: () => fetchCandidateJobs(page),
+    });
+};
+
+export const useCandidateJobQuery = (id: string) => {
+    return useQuery({
+        queryKey: ['candidate-job', id],
+        queryFn: () => fetchCandidateJob(id),
+        enabled: !!id,
     });
 };
 

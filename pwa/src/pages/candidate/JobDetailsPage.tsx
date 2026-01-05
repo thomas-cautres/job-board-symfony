@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useCandidateJobsQuery } from "@/hooks/useJobs";
+import { useCandidateJobQuery } from "@/hooks/useJobs";
 import { Button } from "@/components/ui/button";
 import { MapPin, Briefcase, Banknote, Calendar, ArrowLeft } from "lucide-react";
 import { ApplicationForm } from "@/components/candidate/ApplicationForm";
@@ -7,9 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 
 export default function JobDetailsPage() {
     const { id } = useParams();
-    const { data: jobs = [], isLoading } = useCandidateJobsQuery();
-
-    const job = jobs.find(j => j.id === id);
+    const { data: job, isLoading } = useCandidateJobQuery(id || '');
 
     if (isLoading) {
         return <div className="container mx-auto px-4 py-12 text-center text-muted-foreground">Loading job details...</div>;

@@ -1,6 +1,17 @@
 import { ApiClient } from "./client";
 import type { Job, JobApplication } from "../types/jobs";
 
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    meta: {
+        totalItems: number;
+        itemsPerPage: number;
+        currentPage: number;
+        totalPages: number;
+    };
+}
+
 const MOCK_JOBS: Job[] = [
     {
         id: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
@@ -61,15 +72,20 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     }
 ];
 
-export const fetchCandidateJobs = async (): Promise<Job[]> => {
-    // Simulated API call for MVP (Candidate View)
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(MOCK_JOBS), 500);
+export const fetchCandidateJobs = async (page: number = 1): Promise<PaginatedResponse<Job>> => {
+    return ApiClient.request<PaginatedResponse<Job>>(`/api/jobs?page=${page}`, {
+        method: 'GET'
+    });
+};
+
+export const fetchCandidateJob = async (id: string): Promise<Job> => {
+    return ApiClient.request<Job>(`/api/jobs/${id}`, {
+        method: 'GET'
     });
 };
 
 export const fetchRecruiterJobs = async (): Promise<Job[]> => {
-    return ApiClient.request<Job[]>('/api/recruiter/jobs', {
+    return ApiClient.requestSecured<Job[]>('/api/recruiter/jobs', {
         method: 'GET'
     });
 };
@@ -83,7 +99,7 @@ export const createJob = async (job: Omit<Job, 'id' | 'createdAt' | 'status'>): 
         location: job.location,
     };
 
-    return ApiClient.request<Job>('/api/recruiter/job', {
+    return ApiClient.requestSecured<Job>('/api/recruiter/job', {
         method: 'POST',
         body: JSON.stringify(payload)
     });
@@ -117,7 +133,12 @@ export const updateApplicationStatus = async (id: string, status: JobApplication
     });
 };
 
-export const createApplication = async (application: { candidateName: string; candidateEmail: string; jobId: string; message: string }): Promise<void> => {
+export const createApplication = async (application: {
+    candidateName: string;
+    candidateEmail: string;
+    jobId: string;
+    message: string
+}): Promise<void> => {
     return new Promise((resolve) => {
         const newApp: JobApplication = {
             id: crypto.randomUUID(),

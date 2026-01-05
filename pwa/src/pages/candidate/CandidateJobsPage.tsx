@@ -6,16 +6,17 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export default function CandidateJobsPage() {
-    const { data: jobs = [], isLoading, isError } = useCandidateJobsQuery();
+    const { data: paginatedJobs, isLoading, isError } = useCandidateJobsQuery(1);
+    const jobs = paginatedJobs?.data || [];
     const [searchTerm, setSearchTerm] = useState("");
 
     // Simple client-side filtering
     const filteredJobs = jobs.filter(job =>
-        job.status === 'OPEN' && (
-            job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.description.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+    (
+        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.description.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     );
 
     if (isLoading) {

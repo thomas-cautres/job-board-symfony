@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Recruiter\Job;
 
-use App\Dto\Job\JobResponseDto;
+use App\Dto\Recruiter\Job\JobResponseDto;
 use App\Entity\Recruiter;
 use App\Service\Recruiter\JobService;
 use Nelmio\ApiDocBundle\Attribute\Model;

@@ -16,10 +16,26 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/jobs/{page}', name: 'list_jobs', methods: 'GET')]
 #[OA\Response(
     response: Response::HTTP_OK,
-    description: 'Successfully fetched',
+    description: 'Successfully fetched paginated jobs',
     content: new OA\JsonContent(
-        type: 'array',
-        items: new OA\Items(ref: new Model(type: JobResponseDto::class))
+        properties: [
+            new OA\Property(
+                property: 'data',
+                type: 'array',
+                items: new OA\Items(ref: new Model(type: JobResponseDto::class))
+            ),
+            new OA\Property(
+                property: 'meta',
+                properties: [
+                    new OA\Property(property: 'totalItems', type: 'integer'),
+                    new OA\Property(property: 'itemsPerPage', type: 'integer'),
+                    new OA\Property(property: 'currentPage', type: 'integer'),
+                    new OA\Property(property: 'totalPages', type: 'integer'),
+                ],
+                type: 'object'
+            )
+        ],
+        type: 'object'
     )
 )]
 #[OA\Tag(name: 'jobs')]
