@@ -29,6 +29,9 @@ class JobRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Paginator<Job>
+     */
     public function findPaginated(int $start, int $length, ?string $term = null, ?string $location = null): Paginator
     {
         $qb = $this->createQueryBuilder('j');

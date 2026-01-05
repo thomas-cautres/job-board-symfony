@@ -18,25 +18,27 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
+        $faker->seed(1234);
 
         $company = $this->getReference(CompanyFixtures::COMPANY_REFERENCE, Company::class);
 
         for ($i = 0; $i < 50; ++$i) {
             $job = new Job();
-            $job->setTitle($faker->jobTitle());
-            $job->setDescription($faker->realText(400));
-            $job->setSalary($faker->numberBetween(30, 80).'k €');
-            $job->setLocation($faker->city());
+            $job->setTitle($faker->jobTitle())
+                ->setDescription($faker->realText(400))
+                ->setSalary($faker->numberBetween(30, 80) . 'k €')
+                ->setLocation($faker->city());
 
-            // Random JobType
             $types = array_column(JobType::cases(), 'value');
-            $job->setType(JobType::from($faker->randomElement($types)));
 
-            // Random JobStatus (Mostly OPEN)
-            $job->setStatus($faker->boolean(80) ? JobStatus::Open : JobStatus::Closed);
+            /** @var string $type */
+            $type = $faker->randomElement($types);
 
-            $job->setCompany($company);
-            $job->setCreatedBy($company->getCreatedBy()); // Assuming created by the admin of the company
+            $job->setType(JobType::from($type));
+
+            $job->setStatus($faker->boolean(80) ? JobStatus::Open : JobStatus::Closed)
+                ->setCompany($company)
+                ->setCreatedBy($company->getCreatedBy()); // Assuming created by the admin of the company
 
             $manager->persist($job);
         }

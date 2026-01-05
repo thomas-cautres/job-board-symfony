@@ -8,6 +8,9 @@ use App\Dto\ListMeta;
 
 class ListJobs
 {
+    /**
+     * @param JobResponseDto[] $data
+     */
     public function __construct(
         public array $data,
         public ListMeta $meta,

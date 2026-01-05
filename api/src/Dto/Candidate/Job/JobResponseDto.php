@@ -29,7 +29,7 @@ final readonly class JobResponseDto
             createdAt: (string) $job->getCreatedAt()?->format(\DateTimeInterface::RFC3339_EXTENDED),
             salary: (string) $job->getSalary(),
             location: (string) $job->getLocation(),
-            type: $job->getType()->value,
+            type: (string) $job->getType()?->value,
             status: $job->getStatus()->value,
         );
     }

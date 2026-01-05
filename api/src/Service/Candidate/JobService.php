@@ -7,6 +7,7 @@ namespace App\Service\Candidate;
 use App\Dto\Candidate\Job\JobResponseDto;
 use App\Dto\Candidate\Job\ListJobs;
 use App\Dto\ListMeta;
+use App\Entity\Job;
 use App\Repository\JobRepository;
 
 readonly class JobService
@@ -18,9 +19,6 @@ readonly class JobService
     ) {
     }
 
-    /**
-     * @return JobResponseDto[]
-     */
     public function list(int $page): ListJobs
     {
         $limit = self::PAGINATION_LENGTH;
@@ -28,11 +26,14 @@ readonly class JobService
 
         $paginator = $this->jobRepository->findPaginated($offset, $limit);
 
+        /** @var Job[] $jobs */
+        $jobs = iterator_to_array($paginator);
+
+        /** @var JobResponseDto[] $data */
+        $data = array_map(JobResponseDto::fromEntity(...), $jobs);
+
         return new ListJobs(
-            data: array_map(
-                JobResponseDto::fromEntity(...),
-                iterator_to_array($paginator)
-            ),
+            data: $data,
             meta: new ListMeta(count($paginator), $limit, $page, (int) ceil(count($paginator) / $limit))
         );
     }
