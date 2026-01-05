@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useCandidateJobQuery } from "@/hooks/useJobs";
 import { Button } from "@/components/ui/button";
 import { MapPin, Briefcase, Banknote, Calendar, ArrowLeft } from "lucide-react";
-import { ApplicationForm } from "@/components/candidate/ApplicationForm";
+import { ApplicationForm } from "../../components/candidate/ApplicationForm";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export default function JobDetailsPage() {
