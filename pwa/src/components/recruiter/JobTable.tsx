@@ -18,10 +18,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { MoreHorizontal, Pencil, Trash, AlertCircle } from "lucide-react";
-import { useJobsQuery, useDeleteJobMutation } from "@/hooks/useJobs";
+import { useRecruiterJobsQuery, useDeleteJobMutation } from "@/hooks/useJobs";
 
 export function JobTable() {
-    const { data: jobs = [], isLoading, isError, error } = useJobsQuery();
+    const { data: jobs = [], isLoading, isError, error } = useRecruiterJobsQuery();
     const deleteJobMutation = useDeleteJobMutation();
 
     const handleDelete = (id: string) => {

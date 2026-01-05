@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Job;
+namespace App\Dto\Candidate\Job;
 
 use App\Entity\Job;
 

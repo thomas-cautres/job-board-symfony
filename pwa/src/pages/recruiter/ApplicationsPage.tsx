@@ -1,4 +1,4 @@
-import { ApplicationBoard } from '@/components/ApplicationBoard';
+import { ApplicationBoard } from '@/components/recruiter/ApplicationBoard';
 
 export default function ApplicationsPage() {
     return (

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Recruiter;
 
-use App\Dto\Job\CreateJobDto;
-use App\Dto\Job\JobResponseDto;
+use App\Dto\Recruiter\Job\CreateJobDto;
+use App\Dto\Recruiter\Job\JobResponseDto;
 use App\Entity\Company;
 use App\Entity\Job;
 use App\Entity\User;

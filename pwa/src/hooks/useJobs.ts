@@ -1,10 +1,17 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchJobs, createJob, deleteJob } from "@/api/jobs";
+import { fetchCandidateJobs, fetchRecruiterJobs, createJob, deleteJob } from "@/api/jobs";
 
-export const useJobsQuery = () => {
+export const useCandidateJobsQuery = () => {
     return useQuery({
-        queryKey: ['jobs'],
-        queryFn: fetchJobs,
+        queryKey: ['candidate-jobs'],
+        queryFn: fetchCandidateJobs,
+    });
+};
+
+export const useRecruiterJobsQuery = () => {
+    return useQuery({
+        queryKey: ['recruiter-jobs'],
+        queryFn: fetchRecruiterJobs,
     });
 };
 

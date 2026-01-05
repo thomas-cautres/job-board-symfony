@@ -61,8 +61,15 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     }
 ];
 
-export const fetchJobs = async (): Promise<Job[]> => {
-    return ApiClient.request<Job[]>('/api/jobs', {
+export const fetchCandidateJobs = async (): Promise<Job[]> => {
+    // Simulated API call for MVP (Candidate View)
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(MOCK_JOBS), 500);
+    });
+};
+
+export const fetchRecruiterJobs = async (): Promise<Job[]> => {
+    return ApiClient.request<Job[]>('/api/recruiter/jobs', {
         method: 'GET'
     });
 };
@@ -76,7 +83,7 @@ export const createJob = async (job: Omit<Job, 'id' | 'createdAt' | 'status'>): 
         location: job.location,
     };
 
-    return ApiClient.request<Job>('/api/job', {
+    return ApiClient.request<Job>('/api/recruiter/job', {
         method: 'POST',
         body: JSON.stringify(payload)
     });
@@ -107,5 +114,20 @@ export const updateApplicationStatus = async (id: string, status: JobApplication
         } else {
             setTimeout(() => reject(new Error("Application not found")), 500);
         }
+    });
+};
+
+export const createApplication = async (application: { candidateName: string; candidateEmail: string; jobId: string; message: string }): Promise<void> => {
+    return new Promise((resolve) => {
+        const newApp: JobApplication = {
+            id: crypto.randomUUID(),
+            candidateName: application.candidateName,
+            candidateEmail: application.candidateEmail,
+            jobTitle: MOCK_JOBS.find(j => j.id === application.jobId)?.title || 'Unknown Job',
+            status: 'PENDING',
+            appliedAt: new Date().toISOString()
+        };
+        MOCK_APPLICATIONS.unshift(newApp);
+        setTimeout(() => resolve(), 1000);
     });
 };

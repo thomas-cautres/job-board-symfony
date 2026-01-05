@@ -7,7 +7,7 @@ namespace App\Tests\Service;
 use App\Dto\Job\CreateJobDto;
 use App\Entity\Company;
 use App\Entity\Job;
-use App\Service\JobService;
+use App\Service\Recruiter\JobService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
