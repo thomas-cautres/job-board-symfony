@@ -14,6 +14,8 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 
 class RecruiterFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const string RECRUITER_REFERENCE = 'recruiter-default';
+
     public function load(ObjectManager $manager): void
     {
         $passwordHasher = new PasswordHasherFactory([User::class => ['algorithm' => 'auto']])->getPasswordHasher(User::class);
@@ -28,6 +30,8 @@ class RecruiterFixtures extends Fixture implements DependentFixtureInterface
             ->setCompany($company)
             ->setConfirmationCode('1234')
             ->setPassword($passwordHasher->hash('test1234'));
+
+        $this->addReference(self::RECRUITER_REFERENCE, $recruiter);
 
         $manager->persist($recruiter);
         $manager->flush();

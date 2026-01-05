@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Entity\Company;
 use App\Entity\Job;
+use App\Entity\Recruiter;
 use App\Enum\JobStatus;
 use App\Enum\JobType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -20,13 +20,13 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create();
         $faker->seed(1234);
 
-        $company = $this->getReference(CompanyFixtures::COMPANY_REFERENCE, Company::class);
+        $recruiter = $this->getReference(RecruiterFixtures::RECRUITER_REFERENCE, Recruiter::class);
 
         for ($i = 0; $i < 50; ++$i) {
             $job = new Job();
             $job->setTitle($faker->jobTitle())
                 ->setDescription($faker->realText(400))
-                ->setSalary($faker->numberBetween(30, 80) . 'k €')
+                ->setSalary($faker->numberBetween(30, 80).'k €')
                 ->setLocation($faker->city());
 
             $types = array_column(JobType::cases(), 'value');
@@ -37,8 +37,8 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setType(JobType::from($type));
 
             $job->setStatus($faker->boolean(80) ? JobStatus::Open : JobStatus::Closed)
-                ->setCompany($company)
-                ->setCreatedBy($company->getCreatedBy()); // Assuming created by the admin of the company
+                ->setCompany($recruiter->getCompany())
+                ->setCreatedBy($recruiter);
 
             $manager->persist($job);
         }
@@ -49,7 +49,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            CompanyFixtures::class,
+            RecruiterFixtures::class,
         ];
     }
 }

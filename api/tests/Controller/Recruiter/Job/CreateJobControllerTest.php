@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Job;
+namespace App\Tests\Controller\Recruiter\Job;
 
 use App\Entity\Recruiter;
 use Doctrine\ORM\EntityManagerInterface;

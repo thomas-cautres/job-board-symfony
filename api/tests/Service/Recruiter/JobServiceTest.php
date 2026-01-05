@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Service\Recruiter;
 
 use App\Dto\Recruiter\Job\CreateJobDto;
+use App\Dto\Recruiter\Job\JobResponseDto;
 use App\Entity\Company;
 use App\Entity\Job;
+use App\Entity\Recruiter;
 use App\Service\Recruiter\JobService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -49,5 +51,18 @@ class JobServiceTest extends KernelTestCase
         $this->assertSame($dto->description, $createdJob->getDescription());
         $this->assertSame($company, $createdJob->getCompany());
         $this->assertNull($createdJob->getCreatedBy());
+    }
+
+    public function testGetAllForUser(): void
+    {
+        $recruiter = $this->entityManager->getRepository(Recruiter::class)->findOneBy(['email' => 'recruiter@my-company.com']);
+
+        $jobsForUser = $this->jobService->getAllForUser($recruiter);
+
+        $this->assertCount(50, $jobsForUser);
+
+        $jobDto = $jobsForUser[0];
+        $this->assertInstanceOf(JobResponseDto::class, $jobDto);
+        $this->assertSame('Portable Power Tool Repairer', $jobDto->title);
     }
 }

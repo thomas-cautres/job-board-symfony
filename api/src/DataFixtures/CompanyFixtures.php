@@ -12,8 +12,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class CompanyFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const string COMPANY_REFERENCE = 'company-default';
-
     public function load(ObjectManager $manager): void
     {
         $admin = $manager->getRepository(Admin::class)->find(1);
@@ -21,7 +19,6 @@ class CompanyFixtures extends Fixture implements DependentFixtureInterface
         $company = new Company();
         $company->setName('My company')->setCreatedBy($admin);
         $manager->persist($company);
-        $this->addReference(self::COMPANY_REFERENCE, $company);
         $manager->flush();
     }
 

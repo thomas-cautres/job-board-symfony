@@ -8,7 +8,7 @@ use App\Dto\Recruiter\Job\CreateJobDto;
 use App\Dto\Recruiter\Job\JobResponseDto;
 use App\Entity\Company;
 use App\Entity\Job;
-use App\Entity\User;
+use App\Entity\Recruiter;
 use App\Enum\JobType;
 use App\Repository\JobRepository;
 
@@ -38,7 +38,7 @@ readonly class JobService
     /**
      * @return JobResponseDto[]
      */
-    public function getAllForUser(User $user): array
+    public function getAllForUser(Recruiter $user): array
     {
         $jobs = $this->jobRepository->findBy(['createdBy' => $user], orderBy: ['createdAt' => 'DESC']);
 

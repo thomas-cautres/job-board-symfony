@@ -39,10 +39,11 @@ class JobRepository extends ServiceEntityRepository
             ->where('j.status = :status')
             ->setFirstResult($start)
             ->setMaxResults($length)
-            ->setParameter('status', JobStatus::Open);
+            ->setParameter('status', JobStatus::Open)
+            ->orderBy('j.createdAt', 'DESC');
 
         /** @var Paginator<Job> $paginator */
-        $paginator = new Paginator($qb);
+        $paginator = new Paginator($qb, false);
 
         return $paginator;
     }
