@@ -18,6 +18,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Index(name: 'status_idx', columns: ['status'])]
 class Job
 {
     use BlameableTrait;
