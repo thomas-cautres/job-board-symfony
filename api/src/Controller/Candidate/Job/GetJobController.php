@@ -8,6 +8,7 @@ use App\Dto\Candidate\Job\JobResponseDto;
 use App\Entity\Job;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,10 @@ use Symfony\Component\Routing\Requirement\Requirement;
 #[OA\Tag(name: 'jobs')]
 class GetJobController extends AbstractController
 {
-    public function __invoke(Job $job): JsonResponse
+    public function __invoke(
+        #[MapEntity(expr: 'repository.findOneBy({"uuid":uuid, "status":"open"})')]
+        Job $job
+    ): JsonResponse
     {
         return $this->json(JobResponseDto::fromEntity($job), Response::HTTP_OK);
     }

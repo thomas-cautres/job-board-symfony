@@ -27,4 +27,11 @@ class GetJobControllerTest extends WebTestCase
         $this->assertIsArray($responseContent);
         $this->assertEquals('Wellhead Pumper', $responseContent['title']);
     }
+
+    public function testGetJobClosed(): void
+    {
+        $this->client->request('GET', '/api/jobs/b12a5595-3188-32e0-b9a7-2a3ae6afc41c');
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+    }
 }
