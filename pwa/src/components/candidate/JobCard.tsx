@@ -46,7 +46,7 @@ export function JobCard({ job }: JobCardProps) {
             </CardContent>
             <CardFooter className="pt-0">
                 <Button asChild className="w-full gap-2 transition-transform group-hover:translate-x-1" variant="outline">
-                    <Link to={`/jobs/${job.id}`}>
+                    <Link to={`/job/${job.id}`}>
                         View Details <ArrowRight className="h-4 w-4" />
                     </Link>
                 </Button>

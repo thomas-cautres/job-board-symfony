@@ -27,7 +27,7 @@ class ListJobsControllerTest extends WebTestCase
     {
         $this->client->loginUser($this->recruiter);
 
-        $this->client->request('GET', '/api/jobs');
+        $this->client->request('GET', '/api/recruiter/jobs');
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);

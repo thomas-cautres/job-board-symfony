@@ -4,10 +4,17 @@ import { Input } from "@/components/ui/input";
 import { Search, MapPin, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function CandidateJobsPage() {
-    const { data: paginatedJobs, isLoading, isError } = useCandidateJobsQuery(1);
+    const { page: pageParam } = useParams();
+    const navigate = useNavigate();
+    const page = pageParam ? parseInt(pageParam, 10) : 1;
+
+    const { data: paginatedJobs, isLoading, isError } = useCandidateJobsQuery(page);
     const jobs = paginatedJobs?.data || [];
+    const meta = paginatedJobs?.meta;
     const [searchTerm, setSearchTerm] = useState("");
 
     // Simple client-side filtering
@@ -39,7 +46,10 @@ export default function CandidateJobsPage() {
                                 placeholder="Search by title, keyword or company"
                                 className="pl-9"
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value);
+                                    if (page !== 1) navigate('/jobs/1'); // Reset to first page on search
+                                }}
                             />
                         </div>
                         <div className="relative flex-1">
@@ -66,6 +76,31 @@ export default function CandidateJobsPage() {
                         </div>
                     )}
                 </div>
+
+                {/* Pagination Controls */}
+                {meta && meta.totalPages > 1 && (
+                    <div className="flex items-center justify-center gap-2 mt-8">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => navigate(`/jobs/${Math.max(1, page - 1)}`)}
+                            disabled={page === 1 || isLoading}
+                        >
+                            <ChevronLeft className="h-4 w-4" />
+                        </Button>
+                        <span className="text-sm text-muted-foreground">
+                            Page {meta.currentPage} of {meta.totalPages}
+                        </span>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => navigate(`/jobs/${Math.min(meta.totalPages, page + 1)}`)}
+                            disabled={page === meta.totalPages || isLoading}
+                        >
+                            <ChevronRight className="h-4 w-4" />
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );

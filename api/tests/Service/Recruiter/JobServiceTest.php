@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Service;
+namespace App\Tests\Service\Recruiter;
 
-use App\Dto\Job\CreateJobDto;
+use App\Dto\Recruiter\Job\CreateJobDto;
 use App\Entity\Company;
 use App\Entity\Job;
 use App\Service\Recruiter\JobService;
@@ -29,7 +29,10 @@ class JobServiceTest extends KernelTestCase
 
         $dto = new CreateJobDto(
             title: 'Job title',
-            description: 'Job description'
+            description: 'Job description',
+            salary: '50k',
+            location: 'Lyon',
+            type: 'full-time'
         );
 
         $jobResponse = $this->jobService->create($dto, $company);

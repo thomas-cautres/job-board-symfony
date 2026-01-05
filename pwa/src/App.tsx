@@ -20,7 +20,8 @@ function App() {
       <Route element={<CandidateLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/jobs" element={<CandidateJobsPage />} />
-        <Route path="/jobs/:id" element={<JobDetailsPage />} />
+        <Route path="/jobs/:page" element={<CandidateJobsPage />} />
+        <Route path="/job/:id" element={<JobDetailsPage />} />
       </Route>
 
       {/* Auth Routes */}

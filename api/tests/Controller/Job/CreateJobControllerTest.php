@@ -27,7 +27,7 @@ class CreateJobControllerTest extends WebTestCase
     {
         $this->client->loginUser($this->recruiter);
 
-        $this->client->request('POST', '/api/job', [
+        $this->client->request('POST', '/api/recruiter/job', [
             'title' => 'Senior Symfony Developer',
             'description' => 'We are looking for an expert Symfony developer.',
             'salary' => '45k - 60k',
@@ -50,7 +50,7 @@ class CreateJobControllerTest extends WebTestCase
     {
         $this->client->loginUser($this->recruiter);
 
-        $this->client->request('POST', '/api/job', [
+        $this->client->request('POST', '/api/recruiter/job', [
             'title' => 'Senior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony Developer',
             'description' => 'We are looking for an expert Symfony developer.',
             'salary' => '45k - 60k',
@@ -65,7 +65,7 @@ class CreateJobControllerTest extends WebTestCase
     {
         $this->client->loginUser($this->recruiter);
 
-        $this->client->request('POST', '/api/job', [
+        $this->client->request('POST', '/api/recruiter/job', [
             'title' => 'Senior Symfony Developer',
             'description' => 'Senior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony DeveloperSenior Symfony Developer Symfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony DeveloperSymfony DeveloperSenior Symfony Developer',
             'salary' => '45k - 60k',
@@ -78,7 +78,7 @@ class CreateJobControllerTest extends WebTestCase
 
     public function testAccessIsUnauthorized(): void
     {
-        $this->client->request('POST', '/api/job', [
+        $this->client->request('POST', '/api/recruiter/job', [
             'title' => 'Senior Symfony Developer',
             'description' => 'We are looking for an expert Symfony developer.',
             'salary' => '45k - 60k',
@@ -100,7 +100,7 @@ class CreateJobControllerTest extends WebTestCase
 
         $this->client->loginUser($recruiterWithoutCompany);
 
-        $this->client->request('POST', '/api/job', [
+        $this->client->request('POST', '/api/recruiter/job', [
             'title' => 'Senior Symfony Developer',
             'description' => 'We are looking for an expert Symfony developer.',
             'salary' => '45k - 60k',

@@ -73,7 +73,7 @@ const MOCK_APPLICATIONS: JobApplication[] = [
 ];
 
 export const fetchCandidateJobs = async (page: number = 1): Promise<PaginatedResponse<Job>> => {
-    return ApiClient.request<PaginatedResponse<Job>>(`/api/jobs?page=${page}`, {
+    return ApiClient.request<PaginatedResponse<Job>>(`/api/jobs/${page}`, {
         method: 'GET'
     });
 };
