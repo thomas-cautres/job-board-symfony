@@ -23,7 +23,13 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
 
         $recruiter = $this->getReference(RecruiterFixtures::RECRUITER_REFERENCE, Recruiter::class);
         $json = file_get_contents(__DIR__.'/../../data/jobs.json');
-        $jobsData = json_decode($json, associative: true);
+
+        if (false === $json) {
+            throw new \RuntimeException(sprintf('Failure when reading file %s', __DIR__.'/../../data/jobs.json'));
+        }
+
+        /** @var array<array<string, string>> $jobsData */
+        $jobsData = json_decode($json, true);
 
         foreach ($jobsData as $jobData) {
             $job = new Job();
