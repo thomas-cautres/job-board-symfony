@@ -15,7 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
-#[Route('/api/jobs/{uuid}', name: 'candidate_get_job', requirements: ['uuid' => Requirement::UID_RFC4122], methods: 'GET')]
+#[Route('/api/jobs/{uuid}',
+    name: 'candidate_get_job',
+    requirements: ['uuid' => Requirement::UID_RFC4122],
+    methods: 'GET',
+    format: 'json'
+)]
 #[OA\Response(
     response: Response::HTTP_OK,
     description: 'Successfully fetched job',
@@ -26,9 +31,8 @@ class GetJobController extends AbstractController
 {
     public function __invoke(
         #[MapEntity(expr: 'repository.findOneBy({"uuid":uuid, "status":"open"})')]
-        Job $job
-    ): JsonResponse
-    {
+        Job $job,
+    ): JsonResponse {
         return $this->json(JobResponseDto::fromEntity($job), Response::HTTP_OK);
     }
 }

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api/jobs/{page<\d+>}', name: 'candidate_list_jobs', methods: 'GET')]
+#[Route('/api/jobs/{page<\d+>}', name: 'candidate_list_jobs', methods: 'GET', format: 'json')]
 #[OA\Response(
     response: Response::HTTP_OK,
     description: 'Successfully fetched paginated jobs',

@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/api/recruiter/job', name: 'recruiter_create_job', methods: 'POST')]
+#[Route('/api/recruiter/job', name: 'recruiter_create_job', methods: 'POST', format: 'json')]
 #[OA\Response(
     response: Response::HTTP_CREATED,
     description: 'Successfully created',
