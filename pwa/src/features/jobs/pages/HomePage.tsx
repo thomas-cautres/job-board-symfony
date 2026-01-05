@@ -8,7 +8,7 @@ export default function HomePage() {
         <div className="flex flex-col min-h-[calc(100vh-4rem)]">
             {/* Hero Section */}
             <section className="relative py-20 lg:py-32 overflow-hidden bg-primary/5">
-                <div className="container px-4 md:px-6 relative z-10">
+                <div className="container mx-auto px-4 md:px-6 relative z-10">
                     <div className="flex flex-col items-center space-y-8 text-center">
                         <div className="space-y-4 max-w-3xl">
                             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
@@ -52,7 +52,7 @@ export default function HomePage() {
 
             {/* Features / Stats */}
             <section className="py-16 bg-background">
-                <div className="container px-4 md:px-6">
+                <div className="container mx-auto px-4 md:px-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="flex flex-col items-center text-center p-6 rounded-xl border bg-card hover:bg-accent/50 transition-colors">
                             <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -81,7 +81,7 @@ export default function HomePage() {
 
             {/* CTA Section */}
             <section className="py-20 bg-muted/30">
-                <div className="container px-4 md:px-6">
+                <div className="container mx-auto px-4 md:px-6">
                     <div className="flex flex-col items-center text-center space-y-6">
                         <h2 className="text-3xl font-bold tracking-tight">Ready to start your journey?</h2>
                         <p className="max-w-[600px] text-muted-foreground text-lg">

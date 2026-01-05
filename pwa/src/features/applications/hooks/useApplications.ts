@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchApplications, updateApplicationStatus } from "@/api/jobs";
+import { fetchApplications, updateApplicationStatus } from "@/api/applications";
 import type { JobApplication } from "@/types/jobs";
 
 export const useApplicationsQuery = () => {
