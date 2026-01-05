@@ -12,6 +12,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Uid\Uuid;
 
 class JobFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -21,22 +22,19 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $faker->seed(1234);
 
         $recruiter = $this->getReference(RecruiterFixtures::RECRUITER_REFERENCE, Recruiter::class);
+        $json = file_get_contents(__DIR__.'/../../data/jobs.json');
+        $jobsData = json_decode($json, associative: true);
 
-        for ($i = 0; $i < 50; ++$i) {
+        foreach ($jobsData as $jobData) {
             $job = new Job();
-            $job->setTitle($faker->jobTitle())
-                ->setDescription($faker->realText(400))
-                ->setSalary($faker->numberBetween(30, 80).'k €')
-                ->setLocation($faker->city());
-
-            $types = array_column(JobType::cases(), 'value');
-
-            /** @var string $type */
-            $type = $faker->randomElement($types);
-
-            $job->setType(JobType::from($type));
-
-            $job->setStatus($faker->boolean(80) ? JobStatus::Open : JobStatus::Closed)
+            $job
+                ->setUuid(Uuid::fromString($jobData['uuid']))
+                ->setTitle($jobData['title'])
+                ->setDescription($jobData['description'])
+                ->setSalary($jobData['salary'])
+                ->setLocation($jobData['location'])
+                ->setType(JobType::from($jobData['type']))
+                ->setStatus(JobStatus::from($jobData['status']))
                 ->setCompany($recruiter->getCompany())
                 ->setCreatedBy($recruiter);
 

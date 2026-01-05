@@ -63,6 +63,6 @@ class JobServiceTest extends KernelTestCase
 
         $jobDto = $jobsForUser[0];
         $this->assertInstanceOf(JobResponseDto::class, $jobDto);
-        $this->assertSame('Portable Power Tool Repairer', $jobDto->title);
+        $this->assertSame('Wellhead Pumper', $jobDto->title);
     }
 }

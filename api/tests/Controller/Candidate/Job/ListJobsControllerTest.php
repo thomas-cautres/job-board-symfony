@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller\Candidate\Job;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -26,12 +28,12 @@ class ListJobsControllerTest extends WebTestCase
         $this->assertIsArray($responseContent['data']);
         $this->assertIsArray($responseContent['meta']);
         $this->assertCount(10, $responseContent['data']);
-        $this->assertSame(46, $responseContent['meta']['totalItems']);
+        $this->assertSame(35, $responseContent['meta']['totalItems']);
         $this->assertSame(10, $responseContent['meta']['itemsPerPage']);
         $this->assertSame(1, $responseContent['meta']['currentPage']);
-        $this->assertSame(5, $responseContent['meta']['totalPages']);
+        $this->assertSame(4, $responseContent['meta']['totalPages']);
 
-        $this->assertEquals('Visual Designer', $responseContent['data'][0]['title']);
+        $this->assertEquals('Music Composer', $responseContent['data'][0]['title']);
     }
 
     public function testListJobsPage2Success(): void
@@ -45,9 +47,9 @@ class ListJobsControllerTest extends WebTestCase
         $this->assertIsArray($responseContent['data']);
         $this->assertIsArray($responseContent['meta']);
         $this->assertCount(10, $responseContent['data']);
-        $this->assertSame(46, $responseContent['meta']['totalItems']);
+        $this->assertSame(35, $responseContent['meta']['totalItems']);
         $this->assertSame(10, $responseContent['meta']['itemsPerPage']);
         $this->assertSame(2, $responseContent['meta']['currentPage']);
-        $this->assertSame(5, $responseContent['meta']['totalPages']);
+        $this->assertSame(4, $responseContent['meta']['totalPages']);
     }
 }

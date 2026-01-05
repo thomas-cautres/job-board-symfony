@@ -42,7 +42,7 @@ class JobServiceTest extends KernelTestCase
         $this->assertInstanceOf(JobResponseDto::class, $job);
 
         // Detailed Job assertions
-        $this->assertSame('Visual Designer', $job->title);
+        $this->assertSame('Music Composer', $job->title);
         $this->assertNotEmpty($job->id);
         $this->assertMatchesRegularExpression('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $job->id);
         $this->assertNotEmpty($job->description);
