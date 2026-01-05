@@ -25,5 +25,6 @@ class GetJobControllerTest extends WebTestCase
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertIsArray($responseContent);
+        $this->assertEquals('Wellhead Pumper', $responseContent['title']);
     }
 }
